@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ListGroup, Button, Spinner } from "react-bootstrap";
 import "./styles.css";
 
@@ -20,24 +20,33 @@ const List = () => {
     setIsLoading(false);
   };
 
-  fetchRepositories();
+  useEffect(() => {
+    fetchRepositories();
+  }, []);
 
   return (
     <div className="list">
       <div className="container">
         <h2 className="title">Devpass Repositories</h2>
 
-        {isLoading ?
-          (<Spinner />) :
-          (
-            <ListGroup className="repositoriesList">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <ListGroup className="repositoriesList">
+            {repositories.map((repo) => (
+              <ListGroup.Item key={repo.id}>{repo.name}</ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
 
-              {repositories.map((repo) => (
-                <ListGroup.Item key={repo.id}>{repo.name}</ListGroup.Item>
-              ))}
-
-            </ListGroup>)}
-        <Button data-testid="button" className="button" variant="primary" onClick={() => fetchRepositories()}>Fetch repositories</Button>
+        <Button
+          data-testid="button"
+          className="button"
+          variant="primary"
+          onClick={() => fetchRepositories()}
+        >
+          Fetch repositories
+        </Button>
       </div>
     </div>
   );
