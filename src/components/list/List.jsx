@@ -25,7 +25,7 @@ function List() {
 
   return (
     <div>
-      {isLoading && <Spinner animation="border" />}
+      {isLoading}
       <ListGroup>
         {repositories.map((repo) => (
           <ListGroup.Item key={repo.id}>{repo.name}</ListGroup.Item>
